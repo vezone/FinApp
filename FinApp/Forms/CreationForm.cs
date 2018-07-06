@@ -1,6 +1,7 @@
-﻿using FinApp.src;
-using System;
+﻿using System;
 using System.Windows.Forms;
+
+using FinApp.src;
 
 namespace FinApp.Forms
 {

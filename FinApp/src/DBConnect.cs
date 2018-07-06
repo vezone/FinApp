@@ -30,9 +30,9 @@ namespace FinApp.src
             m_Connection = new MySqlConnection(ConnectionString); ;
         }
 
-        public static string Server { get; set; }
+        public static string Server   { get; set; }
         public static string DataBase { get; set; }
-        public static string Login { get; set; }
+        public static string Login    { get; set; }
         public static string Password { get; set; }
 
         public static string Table { get; set; }

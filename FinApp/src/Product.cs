@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FinApp.src
+﻿namespace FinApp.src
 {
     class Product
     {
@@ -17,7 +15,7 @@ namespace FinApp.src
             Name = name;
             Number = number;
             Price = price;
-            Cost = (Int32.Parse(number) * Int32.Parse(price)).ToString();
+            Cost = (System.Int32.Parse(number) * System.Int32.Parse(price)).ToString();
         }
 
         public Product(string name, string number, string price, string cost)
@@ -27,7 +25,7 @@ namespace FinApp.src
             Price = price;
 
             string realCost
-                = (Double.Parse(Number) * Double.Parse(Price))
+                = (System.Double.Parse(Number) * System.Double.Parse(Price))
                 .ToString();
 
             if (cost == realCost)
@@ -48,7 +46,7 @@ namespace FinApp.src
         public bool IsCostCorrect()
         {
             string realCost
-                = (Double.Parse(Number) * Double.Parse(Price))
+                = (System.Double.Parse(Number) * System.Double.Parse(Price))
                 .ToString();
 
             if (Cost == realCost) { return true; }

@@ -1,11 +1,12 @@
-﻿using FinApp.Forms;
-using FinApp.src;
-using MetroFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+using FinApp.Forms;
+using FinApp.src;
+using MetroFramework;
 
 using Excel = Microsoft.Office.Interop.Excel;
 
