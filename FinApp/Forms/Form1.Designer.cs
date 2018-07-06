@@ -145,14 +145,14 @@
             this.поДнямToolStripMenuItem.Name = "поДнямToolStripMenuItem";
             this.поДнямToolStripMenuItem.Size = new System.Drawing.Size(238, 28);
             this.поДнямToolStripMenuItem.Text = "По дням";
-            this.поДнямToolStripMenuItem.Click += new System.EventHandler(this.поДнямToolStripMenuItem_Click);
+            this.поДнямToolStripMenuItem.Click += new System.EventHandler(this.ПоДнямToolStripMenuItem_ClickAsync);
             // 
             // финальныйОтчетToolStripMenuItem
             // 
             this.финальныйОтчетToolStripMenuItem.Name = "финальныйОтчетToolStripMenuItem";
             this.финальныйОтчетToolStripMenuItem.Size = new System.Drawing.Size(238, 28);
             this.финальныйОтчетToolStripMenuItem.Text = "Финальный отчет";
-            this.финальныйОтчетToolStripMenuItem.Click += new System.EventHandler(this.финальныйОтчетToolStripMenuItem_Click);
+            this.финальныйОтчетToolStripMenuItem.Click += new System.EventHandler(this.ФинальныйОтчетToolStripMenuItem_Click);
             // 
             // вывестиПодсчетToolStripMenuItem
             // 
@@ -168,14 +168,14 @@
             this.дляТекущейТаблицыToolStripMenuItem.Name = "дляТекущейТаблицыToolStripMenuItem";
             this.дляТекущейТаблицыToolStripMenuItem.Size = new System.Drawing.Size(271, 28);
             this.дляТекущейТаблицыToolStripMenuItem.Text = "Для текущей таблицы";
-            this.дляТекущейТаблицыToolStripMenuItem.Click += new System.EventHandler(this.дляТекущейТаблицыToolStripMenuItem_Click);
+            this.дляТекущейТаблицыToolStripMenuItem.Click += new System.EventHandler(this.ДляТекущейТаблицыToolStripMenuItem_Click);
             // 
             // дляВсехТаблицToolStripMenuItem
             // 
             this.дляВсехТаблицToolStripMenuItem.Name = "дляВсехТаблицToolStripMenuItem";
             this.дляВсехТаблицToolStripMenuItem.Size = new System.Drawing.Size(271, 28);
             this.дляВсехТаблицToolStripMenuItem.Text = "Для всех таблиц";
-            this.дляВсехТаблицToolStripMenuItem.Click += new System.EventHandler(this.дляВсехТаблицToolStripMenuItem_Click);
+            this.дляВсехТаблицToolStripMenuItem.Click += new System.EventHandler(this.ДляВсехТаблицToolStripMenuItem_Click);
             // 
             // инструментыToolStripMenuItem
             // 
@@ -190,7 +190,7 @@
             this.калькуляторToolStripMenuItem.Name = "калькуляторToolStripMenuItem";
             this.калькуляторToolStripMenuItem.Size = new System.Drawing.Size(191, 28);
             this.калькуляторToolStripMenuItem.Text = "Калькулятор";
-            this.калькуляторToolStripMenuItem.Click += new System.EventHandler(this.калькуляторToolStripMenuItem_Click);
+            this.калькуляторToolStripMenuItem.Click += new System.EventHandler(this.КалькуляторToolStripMenuItem_Click);
             // 
             // panel1
             // 
@@ -276,7 +276,7 @@
             this.metroButton1.TabIndex = 0;
             this.metroButton1.Text = "06_2018";
             this.metroButton1.UseSelectable = true;
-            this.metroButton1.Click += new System.EventHandler(this.metroButton1_Click);
+            this.metroButton1.Click += new System.EventHandler(this.MetroButton1_Click);
             // 
             // panel2
             // 

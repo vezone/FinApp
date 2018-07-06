@@ -4,6 +4,7 @@ using MetroFramework;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Excel = Microsoft.Office.Interop.Excel;
@@ -16,13 +17,13 @@ namespace FinApp
         List<Panel> panelsList = new List<Panel>();
 
         //Logic var
-        private int m_Index = 0, m_TablesCount = 0;
-        private bool f_IsCreated = false;
+        private int  m_Index       = 0, 
+                     m_TablesCount = 0;
+        private bool f_IsCreated   = false;
         private Table[] m_TableList;
         private List<ParsedTables> m_ParsedTables;
-
         private DBConnect m_DB;
-
+        
         Excel.Application m_ExcelApplication;
         Excel.Workbook m_WorkBook;
         Excel.Worksheet[] m_WorkSheetCollection;
@@ -88,7 +89,7 @@ namespace FinApp
             FillGrid();
         }
 
-        private void Form1_Load(object sender, System.EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
             Resizable = false;
 
@@ -123,21 +124,57 @@ namespace FinApp
 
             //Text = "Бухгалтерия";
         }
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+        }
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+        }
         
-//menu strip stuff
+        private void MetroButton1_Click(object sender, EventArgs e)
+        {
+            panelsList[1].BringToFront();
+            Init("06.2018");
+        }
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            panelsList[1].BringToFront();
+            Init("07.2018");
+        }
+        private void metroButton3_Click(object sender, EventArgs e)
+        {
+            //panelsList[1].BringToFront();
+            //metroLabel1.Text = $"{metroButton3.Text}";
+        }
+        private void metroButton4_Click(object sender, EventArgs e)
+        {
+            //panelsList[1].BringToFront();
+            //metroLabel1.Text = $"{metroButton4.Text}";
+        }
+        private void metroButton5_Click(object sender, EventArgs e)
+        {
+            //panelsList[1].BringToFront();
+            //metroLabel1.Text = $"{metroButton5.Text}";
+        }
+        private void metroButton6_Click(object sender, EventArgs e)
+        {
+            //panelsList[1].BringToFront();
+            //metroLabel1.Text = $"{metroButton6.Text}";
+        }
+
+        //menu strip stuff
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
         }
 
-        private void создатьToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void создатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreationForm m_CreationForm = new CreationForm();
             m_CreationForm.Activate();
             m_CreationForm.Visible = true;
             f_IsCreated = true;
         }
-
-        private void сохранитьToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_DB.RunQuery(DBConnect.DeleteAllProducts(m_TableList[m_Index].Name));
 
@@ -154,58 +191,18 @@ namespace FinApp
                 "Table was saved in db!", "Message", 
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-        private void удалитьToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             m_DB.RunQuery(DBConnect.DeleteTable(m_TableList[m_Index].Name));
             FillTables();
             FillGrid();
         }
-
-        private void вернутьсяВМенюToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void вернутьсяВМенюToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panelsList[0].BringToFront();
         }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void metroButton1_Click(object sender, System.EventArgs e)
-        {
-            panelsList[1].BringToFront();
-            Init("06.2018");
-        }
-        private void metroButton2_Click(object sender, System.EventArgs e)
-        {
-            panelsList[1].BringToFront();
-            Init("07.2018");
-        }
-        private void metroButton3_Click(object sender, System.EventArgs e)
-        {
-            //panelsList[1].BringToFront();
-            //metroLabel1.Text = $"{metroButton3.Text}";
-        }
-        private void metroButton4_Click(object sender, System.EventArgs e)
-        {
-            //panelsList[1].BringToFront();
-            //metroLabel1.Text = $"{metroButton4.Text}";
-        }
-        private void metroButton5_Click(object sender, System.EventArgs e)
-        {
-            //panelsList[1].BringToFront();
-            //metroLabel1.Text = $"{metroButton5.Text}";
-        }
-        private void metroButton6_Click(object sender, System.EventArgs e)
-        {
-            //panelsList[1].BringToFront();
-            //metroLabel1.Text = $"{metroButton6.Text}";
-        }
         
-        private void metroButton7_Click(object sender, System.EventArgs e)
+        private void metroButton7_Click(object sender, EventArgs e)
         {
             if (f_IsCreated)
             {
@@ -218,7 +215,7 @@ namespace FinApp
                 FillGrid();
             }
         }
-        private void metroButton8_Click(object sender, System.EventArgs e)
+        private void metroButton8_Click(object sender, EventArgs e)
         {
             if (f_IsCreated)
             {
@@ -253,23 +250,44 @@ namespace FinApp
 
             }
         }
-
-        private void metroLabel1_Click(object sender, System.EventArgs e)
+        private void metroLabel1_Click(object sender, EventArgs e)
         {
         }
 
-//FUNCS
-        //TODO: add date sort for m_TableList in the end
-        public void FillTables()
+        private async void ПоДнямToolStripMenuItem_ClickAsync(object sender, EventArgs e)
         {
-            List<string> text = m_DB.RunQueryW2(DBConnect.ShowAllTables());
+            await GenerateDaysReportAsync();
+        }
+        private async void ФинальныйОтчетToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await Task.Run(()=>GenerateFinalReport());
+        }
+        private void ДляТекущейТаблицыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CurrentMessageReport();
+        }
+        private void ДляВсехТаблицToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TablesMessageReport();
+        }
+
+        private void КалькуляторToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process
+                .Start(new System.Diagnostics.ProcessStartInfo()
+                .FileName = "calc");
+        }
+
+        //FUNCS
+        private void FillTables()
+        {
+            List<string> text  = m_DB.RunQueryW2(DBConnect.ShowAllTables());
             if (m_TablesCount != text.Count)
             {
-                m_TablesCount = text.Count;
-                if (m_Index >= m_TablesCount)
-                    m_Index = (m_TablesCount - 1);
-            }
-            m_TableList = new Table[text.Count];
+                m_TablesCount  = text.Count;
+                if (m_Index   >= m_TablesCount)
+                    m_Index    = (m_TablesCount - 1);
+            } m_TableList      = new Table[text.Count];
 
             for (int i = 0; i < text.Count; i++)
             {
@@ -278,7 +296,6 @@ namespace FinApp
                 m_TableList[i].Name = text[i];
             }
         }
-
         private void FillGrid()
         {
             metroLabel1.Text = $"{m_TableList[m_Index].Name}";
@@ -292,7 +309,6 @@ namespace FinApp
             }
 
         }
-
         private int NumberOfIndividDates()
         {
             int length = 0;
@@ -314,8 +330,9 @@ namespace FinApp
 
             return length;
         }
-
-        private void ParseTables()
+        
+        //______EXCEL STUFF
+        private async Task ParseTables()
         {
             List<Table> list = new List<Table>(1);
             List<Table> tList = new List<Table>(m_TableList);
@@ -333,12 +350,11 @@ namespace FinApp
                         j--;
                     }
                 }
-                GenerateExcelDatePage(table.FirstName, list);
+                await Task.Run(() => GenerateExcelDatePage(table.FirstName, list));
                 list.Clear();
             }
         }
-
-        private void поДнямToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private async Task GenerateDaysReportAsync()
         {
             //Excel stuff
             m_ExcelApplication = new Excel.Application();
@@ -346,10 +362,10 @@ namespace FinApp
             m_WorkSheetCollection = new Excel.Worksheet[NumberOfIndividDates() + 1];
             m_WSCollectionIndex = 0;
 
-            ParseTables();
+            await Task.Run(() => ParseTables());
         }
 
-        private void финальныйОтчетToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void GenerateFinalReport()
         {
             m_ExcelApplication = new Excel.Application();
             m_WorkBook = m_ExcelApplication.Workbooks.Add();
@@ -414,8 +430,7 @@ namespace FinApp
             m_ExcelApplication.Visible = true;
             m_ExcelApplication.UserControl = true;
         }
-
-        private void дляТекущейТаблицыToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void CurrentMessageReport()
         {
             double Summary = 0.0;
             List<Product> list = m_TableList[m_Index].Content;
@@ -424,11 +439,10 @@ namespace FinApp
                 Summary += Double.Parse(list[i].Cost);
             }
             MetroMessageBox.Show(this,
-                $"{m_TableList[m_Index].Name}\nСуммарные траты: {Summary.ToString()}", "Отчет", 
+                $"{m_TableList[m_Index].Name}\nСуммарные траты: {Summary.ToString()}", "Отчет",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
-        private void дляВсехТаблицToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void TablesMessageReport()
         {
             ParseTablesByDates();
             string str = "";
@@ -454,15 +468,6 @@ namespace FinApp
             str += $"\n{globalSummary} \n";
             MessageBox.Show($"{str}");
         }
-
-        private void калькуляторToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            System.Diagnostics.Process.Start(
-                new System.Diagnostics.ProcessStartInfo()
-                .FileName = "calc");
-        }
-
-        //______EXCEL STUFF
         private void GenerateExcelDatePage(string date, List<Table> list)
         {
             //Basic
@@ -541,9 +546,6 @@ namespace FinApp
             m_ExcelApplication.Visible = true;
             m_ExcelApplication.UserControl = true;
         }
-
-        //TODO: it's work, but we should pay
-        //more attention for "workability"
         private void ParseTablesByDates()
         {
             List<Table> tList = new List<Table>(m_TableList);
@@ -565,84 +567,7 @@ namespace FinApp
                 m_ParsedTables.Add(parsedTables);
             }
         }
-
-        private void GenerateDaysReport()
-        {
-            //Excel stuff
-            m_ExcelApplication = new Excel.Application();
-            m_WorkBook = m_ExcelApplication.Workbooks.Add();
-            m_WorkSheetCollection = new Excel.Worksheet[NumberOfIndividDates() + 1];
-            m_WSCollectionIndex = 0;
-
-            ParseTables();
-        }
-
-        private void GenerateFinalReport()
-        {
-            m_ExcelApplication = new Excel.Application();
-            m_WorkBook = m_ExcelApplication.Workbooks.Add();
-            m_WorkSheetCollection = new Excel.Worksheet[1];
-            m_WorkSheetCollection[0] =
-                (Excel.Worksheet)m_WorkBook.Worksheets.get_Item(1);
-            m_WorkSheetCollection[0] = m_WorkBook.Worksheets.Add();
-
-            m_WorkSheetCollection[0].StandardWidth = 20;
-            m_WSCollectionIndex = 0;
-            m_WorkSheetCollection[0].Name = "FinalReport";
-
-            //setting
-            m_WorkSheetCollection[0].Cells.HorizontalAlignment = Excel.Constants.xlCenter;
-            m_WorkSheetCollection[0].Cells.Font.Size = 14;
-            m_WorkSheetCollection[0].Cells.Font.Name = "Times New Roman";
-
-            ParseTablesByDates();
-
-            m_WorkSheetCollection[0].Cells[2, 1].Value = "Кол-во таблиц";
-            m_WorkSheetCollection[0].Cells[2, 2].Value = m_ParsedTables.Count;
-
-
-            for (int i = 3; i < m_ParsedTables.Count + 3; i++)
-            {
-                m_WorkSheetCollection[0].Cells[i, 1].Value = m_ParsedTables[i - 3].Date;
-                m_WorkSheetCollection[0].Cells[i, 2].Value =
-                    (int)m_ParsedTables[i - 3].GetCacheSpending();
-            }
-
-            m_WorkSheetCollection[0].Cells[m_ParsedTables.Count + 3, 1].Value =
-                "Общая сумма";
-            m_WorkSheetCollection[0].Cells[m_ParsedTables.Count + 3, 2].FormulaLocal =
-                $"=СУММ(B{3}:B{m_ParsedTables.Count + 2})";
-
-            try
-            {
-                var xlCharts =
-                    m_WorkSheetCollection[0].ChartObjects() as Excel.ChartObjects;
-                Excel.ChartObject myChart = xlCharts.Add(230, 20, 450, 200);
-                Excel.Chart chartPage = myChart.Chart;
-                object ob1 = $"B{3}";
-                object ob2 = $"B{m_ParsedTables.Count + 2}";
-                var chartRange = m_WorkSheetCollection[0].get_Range(ob1, ob2);
-                object ob3 = $"A{3}";
-                var chartRange2 = m_WorkSheetCollection[0].get_Range(ob3, ob2);
-
-                chartPage.SetSourceData(chartRange);
-                chartPage.ChartType = Excel.XlChartType.xlLine;//xlColumnClustered
-                chartPage.ChartWizard(
-                    Source: chartRange2,
-                    Title: "График расходов по дням",
-                    CategoryTitle: "Дата",
-                    ValueTitle: "Деньги");
-            }
-            catch (System.Runtime.InteropServices.COMException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            // Открываем созданный excel-файл
-            m_ExcelApplication.Visible = true;
-            m_ExcelApplication.UserControl = true;
-        }
-
+        
         //Legacy
         private void RecreateTables()
         {
@@ -662,20 +587,21 @@ namespace FinApp
                 }
             }
         }
-        private void RenameTables(string dbName, string tablePName, string newPName)
+        private void RenameTables(string dbName, string tableName, string newName)
         {
             DBConnect.DataBase = dbName;
             for (int i = 0; i < m_TableList.Length; i++)
             {
-                if (m_TableList[i].Name.Contains(tablePName))
+                if (m_TableList[i].Name.Contains(tableName))
+                {
                     m_DB.RunQuery(DBConnect
-                        .RenameTable($"{m_TableList[i].FirstName}_{tablePName}",
-                                     $"{m_TableList[i].FirstName}_{newPName}"));
-                
+                        .RenameTable($"{m_TableList[i].FirstName}_{tableName}",
+                                     $"{m_TableList[i].FirstName}_{newName}"));
+                }
             }
             FillTables();
             FillGrid();
         }
-
+        
     }
 }

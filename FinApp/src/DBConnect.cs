@@ -60,7 +60,6 @@ namespace FinApp.src
             }
 
         }
-
         private bool CloseConnection()
         {
             try
@@ -90,7 +89,6 @@ namespace FinApp.src
                 CloseConnection();
             }
         }
-
         public string RunQueryW(string query)
         {
             string result = "";
@@ -101,7 +99,6 @@ namespace FinApp.src
             }
             return result;
         }
-
         public List<string> RunQueryW2(string query)
         {
             List<string> list = new List<string>(0);
@@ -120,7 +117,6 @@ namespace FinApp.src
             }
             return list;
         }
-
         public Table RunQueryWT(string query)
         {
             Table table = new Table();
@@ -169,9 +165,7 @@ namespace FinApp.src
             return $"ALTER TABLE `{DataBase}`.`{tableName}`"+
                    $"RENAME TO  `{DataBase}`.`{newName}` ; ";
         }
-
         
-
         public static string InsertProduct(string tableName, string product, string number, string nprice, string price)
         {
             return $"INSERT INTO `{DataBase}`.`{tableName}` (`Товар`, `Количество`, `Цена`, `Стоимость`) VALUES('{product}', '{number}', '{nprice}', '{price}');";

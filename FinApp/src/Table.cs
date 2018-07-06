@@ -7,10 +7,8 @@ namespace FinApp.src
         public string Name { get; set; }
         public string FirstName { get { return Name.Split('_')[0]; } }
         public string SecondName { get { return Name.Split('_')[1]; } }
-        public string LowName { get {
-                return $"{FirstName.Split('.')[1]}.{FirstName.Split('.')[2]}"; } }
-       
-
+        public string LowName => $"{FirstName.Split('.')[1]}.{FirstName.Split('.')[2]}";
+        
         private List<Product> m_Content;
         public List<Product> Content
         {
@@ -40,7 +38,6 @@ namespace FinApp.src
         {
             m_Content = new List<Product>(0);
         }
-
         public Table(Product[] products)
         {
             foreach (Product product in products)
@@ -53,13 +50,11 @@ namespace FinApp.src
         {
             m_Content.Add(product);
         }
-
         public void Remove(Product product)
         {
             m_Content.Remove(product);
         }
-
-        //doesn't work
+        
         public override string ToString()
         {
             string toString = "";
@@ -80,7 +75,6 @@ namespace FinApp.src
             }
             return summary;
         }
-
         public double GetNumber()
         {
             double summary = 0.0;
@@ -128,7 +122,6 @@ namespace FinApp.src
             Date = date;
             m_Content = new List<Table>(1);
         }
-
         public ParsedTables(Table[] tables)
         {
             foreach (Table table in tables)
@@ -141,13 +134,11 @@ namespace FinApp.src
         {
             m_Content.Add(table);
         }
-
         public void Remove(Table table)
         {
             m_Content.Remove(table);
         }
-
-        //doesn't work
+        
         public override string ToString()
         {
             string toString = "";
